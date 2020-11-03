@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        body,
+        html {
+            height: 100%;
+            background-image: url("igor-kasalovic-tNDvFkxkBHo-unsplash.jpg");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .abc {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+        
+        .footer {
+            position: absolute;
+            color: aliceblue;
+            font-weight: bold;
+            bottom: 7%;
+            left: 5%;
+        }
+        
+        .asd {
+            position: absolute;
+            text-align: center;
+            top: 45%;
+            left: 44%;
+            font-weight: bold;
+        }
+        
+        #wea {
+            font-size: x-large;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        #back {
+            left: 5px;
+            bottom: 5px;
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px 0px blue;
+            text-align: center;
+            font-weight: bolder;
+        }
+        
+        #p {
+            font-family: 'Tangerine';
+            padding-top: 20%;
+            font-weight: bolder;
+            font-size: x-large;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 class="abc">Current Weather</h2>
+    <div class=" asd">
+        <span id="wea"></span><br/>
+        <span id="desc"></span><br/>
+        <span id="temp"></span>
+    </div>
+
+    <div class="footer">
+        Latitude : <span id="lat"></span><br/> Longitude : <span id="lon"></span>
+    </div>
+    <a href="Cont.html">
+        <div id="back">
+            <p id="p">
+                Back </p>
+        </div>
+    </a>
+</body>
+<script>
+    window.onload = () => {
+        document.getElementById("wea").innerHTML = "Loading...";
+        document.getElementById("desc").innerHTML = "Turn on the Location...";
+    };
+
+    navigator.geolocation.getCurrentPosition(function(pos, err) {
+        var lat = pos.coords.latitude;
+        var lon = pos.coords.longitude;
+        let key = "775678f89d3132b1b49286f446c77a32";
+        let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=imperial`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                const {
+                    weather,
+                    main,
+                    sys,
+                    name
+                } = data;
+                document.getElementById("wea").innerHTML = weather[0]["main"];
+                document.getElementById("desc").innerHTML = weather[0]["description"];
+                document.getElementById("temp").innerHTML = Math.floor(((main["temp"]) - 32) * 5 / 9) + "&deg;C";
+                document.getElementById("lat").innerHTML = lat;
+                document.getElementById("lon").innerHTML = lon;
+
+            });
+    });
+</script>
+
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 5%;
+            background-color: black;
+            background-attachment: fixed;
+            background-image: url("play.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .cont {
+            margin: 30px 6px 30px 6px;
+            box-shadow: 0px 0px 10px 0px blue;
+            border-radius: 4px;
+        }
+        
+        .cont:hover {
+            cursor: pointer;
+        }
+        
+        .img {
+            margin: 4px;
+            height: max-content;
+        }
+        
+        .title {
+            color: white;
+            font-weight: bolder;
+            margin: 5px;
+        }
+        
+        .desc {
+            color: white;
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+        
+        #inp {
+            box-shadow: 0px 0px 5px 2px blue;
+            margin: 10px 6px 10px 6px;
+            color: white;
+        }
+        
+        #btn {
+            margin-left: 6px;
+            background-color: rgb(17, 17, 189);
+            box-shadow: 0px 0px 5px 2px blue;
+        }
+        
+        #back {
+            left: 5px;
+            bottom: 5px;
+            position: fixed;
+            margin: 5% ;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px 0px blue;
+            text-align: center;
+            font-weight: bolder;
+            }
+         #clear {
+            right: 5px;
+            bottom: 5px;
+            position: fixed;
+            margin: 5% 5% 5% 5% ;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px 0px blue;
+            text-align: center;
+            font-weight: bolder;
+            }
+        #p {
+            font-family: 'Tangerine';
+            padding-top: 20%;
+            font-weight: bolder;
+            font-size: x-large;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="field">
+        <label style="color: white; font-style: oblique;">Search Video </label>
+        <input class="input-group-append" id="inp" type="text" placeholder="Search here.." style="background: transparent;width: 98%;">
+        <button class="btn btn-success" id="btn" onclick="video()">Search</button>
+    </div>
+
+
+    <a href="Cont.html">
+        <div id="back">
+            <p id="p">
+                Back </p>
+        </div>
+    </a>
+    <a href="youtube.html">
+        <div id="clear">
+            <p id="p">
+                Clear </p>
+        </div>
+    </a>
+
+</body>
+<script>
+    function video() {
+        var vid = document.getElementById("inp").value;
+        console.log(vid);
+        const KEY = 'AIzaSyAxT_UiBycemc6IAcKBrhvl94ixL2GkfVg';
+        url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${vid}&maxResults=10&key=${KEY}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                var i = 0;
+                for (i; i < 10; i++) {
+                    var img = data.items[i].snippet.thumbnails.default.url;
+                    var title = data.items[i].snippet.title;
+                    var desc = data.items[i].snippet.description;
+                    var emb = data.items[i].id.videoId;
+
+                    var ch = document.createElement("div");
+                    var chI = document.createElement("img");
+                    var chT = document.createElement("div");
+                    var chD = document.createElement("div");
+                    chI.setAttribute("src", img);
+                    chI.setAttribute("class", "img");
+                    chT.innerHTML = title;
+                    chD.innerHTML = desc;
+                    chT.setAttribute("class", "title");
+                    chD.setAttribute("class", "desc");
+                    ch.setAttribute("class", "cont");
+                    ch.appendChild(chI);
+                    ch.appendChild(chT);
+                    ch.appendChild(chD);
+                    ch.style.backgroundColor = "black"
+                    document.body.append(ch);
+
+                    var esrc = `https://www.youtube.com/embed/${emb}`;
+
+                    function embed() {
+                        var frame = document.createElement("iframe");
+                        frame.setAttribute("src", esrc);
+                        document.body.append(frame);
+                    };
+                    ch.setAttribute("onclick", embed());
+                };
+            });
+    }
+</script>
+
+</html>

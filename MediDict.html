@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+</head>
+<style>
+    body {
+        background-color: black;
+        box-shadow: 0px 0px 10px 3px blue;
+        margin: 5%;
+        height: max-content;
+    }
+    #form {
+        padding: 5% ;
+    }
+    #label {
+        color: white;
+        font-family: 'Tangerine';
+        font-size: x-large;
+    }
+    #inp {
+        background: transparent;
+        margin-top: 3%;
+        border-radius: 3px;
+        box-shadow: 0px 0px 10px 0px blue;
+        width: 98%;
+        height: 5%;
+    }
+    #btn {
+        color: white;
+        font-family: 'Tangerine';
+        background-color: blue;
+        border-radius: 5%;
+        width: 70px;
+        height: 30px;
+        font-size: larger;
+        margin-top: 3% ;
+        text-shadow: 4px 2px 7px black;
+        box-shadow: 0px 0px 10px 3px blue;
+    }
+            #back {
+            left: 5px;
+            bottom: 5px;
+            position: fixed;
+            margin: 5% 5% 5% 5% ;
+            width: 50px ;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px 0px blue;
+            text-align: center;
+            font-weight: bolder;
+            }
+    #p {
+            font-family: 'Tangerine';
+            padding-top: 20%;
+            font-weight: bolder;
+            font-size: x-large;
+        }
+         #clear {
+            right: 5px;
+            bottom: 5px;
+            position: fixed;
+            margin: 5% 5% 5% 5% ;
+            width: 50px ;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px 0px blue;
+            text-align: center;
+            font-weight: bolder;
+            }
+            #nor {
+            bottom: 1%;
+            position: fixed;
+            margin: 5% 30% 10% 37% ;
+            width: 100px ;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px 0px blue;
+            text-align: center;
+            font-weight: bolder;
+            }
+            #loader {
+        border: 10px solid white;
+        border-radius: 50%;
+        border-top: 10px solid blue;
+        box-shadow: 0px 0px 20px 0px blue;
+        width: 70px;
+        height: 70px;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    
+    #loading {
+        position: absolute;
+        margin: 40%;
+        align-items: center;
+    }
+    
+</style>
+<body>
+    <div id="loading">
+        <div id="loader"></div>
+        <h1 id="load">Loading...</h1>
+    </div>
+    <div id="form">
+        <label id="label">Search word</label>
+        <input id="inp" placeholder="Enter any medical term....."/>
+        <button id="btn" onclick="Dictionary()">Search</button>
+    </div>
+    <div id="con">
+        
+    </div>
+    <a href="Cont.html">
+        <div id="back">
+            <p id="p">
+                Back
+             </p>
+        </div>
+    </a>
+    <a href="MediDict.html">
+        <div id="clear">
+            <p id="p">
+                Clear
+            </p>
+        </div>
+    </a>
+
+</body>
+<a href="Translate.html">
+    <div id="nor">
+        <p id="p">
+            Switch to Normal
+        </p>
+    </div>
+</a>
+<script>
+    document.onreadystatechange = () => {
+            if (document.readyState !== "complete") {
+                document.getElementById("con").style.visibility = "hidden";
+                document.getElementById("loading").style.visibility = "visible";
+            } else {
+                document.getElementById("loading").style.visibility = "hidden";
+                document.getElementById("con").style.visibility = "visible";
+            };
+        };
+    function sound() {
+        const word = document.getElementById("inp").value;
+        const url = `https://dictionaryapi.com/api/v3/references/medical/json/${word}?key=9f03b997-6cd7-47ad-a8ec-1ed4f0195a3f`;
+        fetch(url).then(res => res.json())
+                .then(data => {
+                    const {hwi} = data[0];
+                    aud = document.createElement("audio");
+                    const name = hwi.prs[0].sound.audio;
+                    const ltr = name.charAt(0);
+                    var sub ;
+                    if (!isNaN(ltr) || !!name.match(/^[_,.]/)) sub = "number";
+                    else if (name.substring(0, 3) === "bix") sub = "bix";
+                    else if (name.substring(0, 2) === "gg") sub = "gg";
+                    else sub = ltr;
+                    aud.setAttribute("src",`https://media.merriam-webster.com/audio/prons/en/us/mp3/${sub}/${name}.mp3`);
+                    aud.setAttribute("type","audio/mp3");
+                    if (aud.paused) aud.play();
+                    else aud.pause();
+                });
+    };
+    
+    function Dictionary() {
+        const word = document.getElementById("inp").value;
+        const url = `https://dictionaryapi.com/api/v3/references/medical/json/${word}?key=9f03b997-6cd7-47ad-a8ec-1ed4f0195a3f`;
+        fetch(url).then(res => res.json())
+            .then(data => {
+                const { hwi } = data[0];
+                const cont = document.getElementById("con");
+                let wrd = document.createElement("p");
+                wrd.innerHTML = word;
+                wrd.setAttribute("style", "color : rgb(16, 241, 73); margin-left : 5%; text-shadow: 0px 3px 3px rgb(16, 241, 73); margin-bottom : 0");
+                cont.appendChild(wrd);
+                let prs = document.createElement("p");
+                prs.innerHTML = "[" + hwi.prs[0].mw + "]";
+                prs.setAttribute("style", "color : rgb(16, 241, 73); margin-left : 5%; font-style : italic");
+                cont.appendChild(prs);
+                let icon = document.createElement("img");
+                icon.setAttribute("src","pnghut_lound-icon-sound-speaker-electric-blue-symbol-logo_EpeBqyApHa.png");
+                icon.setAttribute("style","width : 30px; height : 30px; margin-left : 5%; margin-top : 0");
+                icon.setAttribute("onclick","sound()");
+                cont.appendChild(icon);
+            });
+    fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                data.map((d) => {
+                    const { et, fl, hwi, meta, shortdef } = d;
+                    const cont = document.getElementById("con");
+                    let con = document.createElement("div");
+                    con.setAttribute("style", "box-shadow : 0px 0px 10px 2px blue; margin : 5%; border-radius : 5%; background : transparent");
+                    cont.appendChild(con);
+                    let p = document.createElement("p");
+                    p.innerHTML = fl;
+                    p.setAttribute("style","font-weight : bolder; color : rgb(0, 0, 255); padding: 5%; text-shadow: 0px 3px 3px blue;");
+                    con.appendChild(p);
+                    document.body.appendChild(con);
+                    shortdef.map((def) => {
+                        let line = document.createElement("p");
+                        line.innerHTML = def;
+                        line.setAttribute("style","padding : 0 5% 0 5%; color : white");
+                        con.append(line);
+                    });
+
+                    for (let i = 0; i <= shortdef.length; i++) {
+                        let def = shortdef[i] +"\n" ;
+                    };
+                    
+                });
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    };
+</script>
+</html>

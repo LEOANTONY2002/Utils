@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<style>
+  body,html{
+    
+    background-image: url("harli-marten-n7a2OJDSZns-unsplash.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+  }
+  .con{
+    position: absolute;
+            text-align: center;
+            font-weight: bold;
+            background: transparent;
+
+            
+            justify-content: center;
+            align-items: center;
+            top: 22%;
+            left: 7%;
+  }
+  .al{
+    position: absolute;
+            text-align: center;
+            font-weight: bold;
+            background: transparent;
+  }
+  .cont{
+    margin-top: 50px;
+    background: transparent;
+    border: 2px solid grey ;
+    border-radius: 6px;
+  }
+  h6{
+    font-size: x-large;
+    font-weight: bolder;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+  h2{
+    color: rgb(19, 20, 19);
+    font-weight: bolder;
+  }
+  #inp{
+    border-radius: 5px;
+    height: 30px;
+  }
+  #back {
+            left: 5px;
+            bottom: 5px;
+            position: fixed;
+            margin: 5%;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px 0px blue;
+            text-align: center;
+            font-weight: bolder;
+        }
+        
+        #p {
+            font-family: 'Tangerine';
+            padding-top: 20%;
+            font-weight: bolder;
+            font-size: x-large;
+        }
+  
+</style>
+</head>
+<body>
+    <div class="container con">
+      <div class="form-group">
+        <h2>Weather Finder</h2><br/>
+        
+          <label>City </label>
+          <input class="input-group-append" id="inp" type="text" placeholder="eg. London, Dindigul" style="background: transparent;width: 100%;">
+          <br/>
+          <button class="btn btn-success" id="btn" onclick="weather()">Find</button>
+        
+        
+        <div class="cont">
+            <div class="alg">
+              <span id="city"></span><br/>
+              <h6 id="wea"></h6>
+              <span id="des"></span><br/>
+              <span id="tem"></span><br/>
+            </div>
+        </div>
+    </div>
+  </div>
+  <a href="Cont.html">
+        <div id="back">
+            <p id="p">
+                Back </p>
+        </div>
+    </a>
+     
+</body>
+
+<script >
+  function weather() {
+    var city = document.getElementById("inp").value;
+    console.log(city);
+    let key = '775678f89d3132b1b49286f446c77a32';
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=imperial`;
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+      console.log(data);
+      const {weather , main, sys, name} = data;
+      document.getElementById("wea").innerHTML = weather[0]["main"];
+      document.getElementById("des").innerHTML = weather[0]["description"];
+      document.getElementById("tem").innerHTML = Math.floor(((main["temp"]) - 32) * 5 / 9) + " \u00B0C";
+      document.getElementById("city").innerHTML = city;
+    
+    });
+  };
+</script>
+</html>

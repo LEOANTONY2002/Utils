@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <style>
+        html {
+            margin: 20px;
+            background-color: black;
+            box-shadow: 0px 0px 10px 3px blue;
+        }
+        body {
+            background-color: black;
+        }
+        
+        .app:hover {
+            width: 250px;
+            height: 250px;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            color: black;
+        }
+        
+        .pdg {
+            padding-top: 20%;
+            vertical-align: middle;
+            position: sticky;
+        }
+        
+        .app {
+            float: left;
+            width: 150px;
+            height: 150px;
+            margin: 5%;
+            box-shadow: 0px 0px 30px 0px blue;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+        
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        
+        h2 {
+            font-family: 'Tangerine';
+            font-size: xx-large;
+            font-weight: 900;
+            text-shadow: 0px 0px 1px blue;
+        }
+        
+        #load {
+            color: aliceblue;
+            font-family: 'Tangerine';
+            font-size: xx-large;
+            font-weight: 900;
+            text-shadow: 0px 0px 1px blue;
+        }
+        
+        #loader {
+            border: 10px solid white;
+            border-radius: 50%;
+            border-top: 10px solid blue;
+            box-shadow: 0px 0px 20px 0px blue;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        #loading {
+            position: absolute;
+            top: 30%;
+            left: 45%;
+            align-items: center;
+        }
+        #time {
+            font-style: inherit;
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            color: blue;
+            font-size: medium;
+            font-weight: bolder;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="loading">
+            <div id="loader"></div>
+            <h1 id="load">Loading...</h1>
+        </div>
+        <div id="con">
+            <h6 id="time"></h6>
+            <a href="weather.html">
+                <div class="app " style="background-image: url('igor-kasalovic-tNDvFkxkBHo-unsplash.jpg')">
+                    <div class="pdg">
+                        <h2>Current Weather</h2>
+                    </div>
+            </a>
+            </div>
+            <a href="AgeCalc.html">
+                <div class="app " style="background-image: url('aaron-burden-5AiWn2U10cw-unsplash.jpg')">
+                    <div class="pdg">
+                        <h2>Age Calculator</h2>
+                    </div>
+                </div>
+            </a>
+            <a href="city.html">
+                <div class="app" style="background-image: url('harli-marten-n7a2OJDSZns-unsplash.jpg')">
+                    <div class="pdg">
+                        <h2>Weather Finder</h2>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="Translate.html">
+                <div class="app " style="background-image: url('pexels-photo-1591447.jpeg')">
+                    <div class="pdg">
+                        <h2>Dictionary</h2>
+                    </div>
+                </div>
+            </a>
+            <a href="MediDict.html">
+                <div class="app " style="background-image: url('medict.png')">
+                    <div class="pdg">
+                        <h2>Medical Dictionary</h2>
+                    </div>
+                </div>
+            </a>
+            <a href="youtube.html">
+                <div class="app " style="background-image: url('green-landscape-12.jpg')">
+                    <div class="pdg">
+                        <h2>Youtube Videos</h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+<script>
+    
+    document.onreadystatechange = () => {
+        if (document.readyState !== "complete") {
+            document.getElementById("con").style.visibility = "hidden";
+            document.getElementById("loading").style.visibility = "visible";
+        } else {
+            document.getElementById("loading").style.visibility = "hidden";
+            document.getElementById("con").style.visibility = "visible";
+        };
+    };
+    setInterval(() => {
+            var time = new Date().toLocaleTimeString();
+            document.getElementById("time").innerHTML = time;
+        }, 1000);
+    
+</script>
+
+</html>

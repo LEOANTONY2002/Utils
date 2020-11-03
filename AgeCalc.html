@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgeCalc</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            background-image: url("aaron-burden-5AiWn2U10cw-unsplash.jpg");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .asd {
+            background: transparent;
+        }
+        
+        h1 {
+            font-family: fantasy;
+        }
+        #p {
+            font-family: 'Tangerine';
+            padding-top: 20%;
+            font-weight: bolder;
+            font-size: x-large;
+        }
+        
+        #dis {
+            font-family: fantasy;
+            text-align: center;
+            text-decoration: solid;
+            font-stretch: ultra-expanded;
+            font-weight: bolder;
+            border: 2px solid rgb(75, 134, 75);
+            border-radius: 5px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        
+        .timedate {
+            font-style: inherit;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        #back {
+            left: 5px;
+            bottom: 5px;
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 15px 0px blue;
+            text-align: center;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<script type="text/javascript">
+    function age() {
+        var yr = parseInt(document.getElementById("yr").value);
+        var mon = parseInt(document.getElementById("mon").value);
+        var day = parseInt(document.getElementById("day").value);
+        var now = Date.now();
+        var add = new Date(yr, mon, day);
+        var dte = now - add.getTime();
+        var agedt = new Date(dte);
+        var age = Math.abs(agedt.getUTCFullYear() - 1970);
+
+        document.getElementById("dis").innerHTML = age.toPrecision() + " Years";
+
+    };
+    setInterval(() => {
+        var time = new Date().toLocaleTimeString();
+        document.getElementById("time").innerHTML = time;
+        var date = new Date().toDateString();
+        document.getElementById("date").innerHTML = date;
+    }, 1000);
+</script>
+
+
+<body>
+    <div class="container-xl">
+        <div class="container-xl">
+            <div class="asd jumbotron">
+                <h1>AGE CALCULATOR</h1>
+                <div class="timedate">
+                    <h6 id="time"></h6>
+                    <p id="date"></p>
+                </div>
+            </div>
+            <div class="container form-group">
+                <h3 class="joomla">Year</h3>
+                <input type="number" id="yr" class="asd input-group-sm btn-sm">
+            </div>
+            <div class="container form-group">
+                <h3 class="joomla">Month</h3>
+                <input type="number" id="mon" class="asd input-group-sm btn-sm">
+            </div>
+            <div class="container form-group">
+                <h3 class="joomla">Day</h3>
+                <input type="number" id="day" class="asd input-group-sm btn-sm">
+            </div>
+            <div class="container form-group">
+                <div class="btn-group-lg">
+                    <button id="btn" value="click" class="btn-success" onclick="age();">Calculate</button>
+                </div>
+            </div class="ui accordion">
+            <p id="dis"></p>
+        </div>
+    </div>
+
+    <a href="Cont.html">
+        <div id="back">
+            <p id="p">
+                Back </p>
+        </div>
+    </a>
+
+</body>
+
+</html>
